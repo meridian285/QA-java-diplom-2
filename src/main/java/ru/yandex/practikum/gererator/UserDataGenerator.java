@@ -48,5 +48,33 @@ public class UserDataGenerator {
         userData.setName("sdbgjhszfsthtxfhdi1");
         return userData;
     }
-
+    @Step("Данные для теста - логин под существующим пользователем")
+    public static UserData getUserRequestLogin(){
+        UserData userData = new UserData();
+        userData.setEmail("testik28555456419@gmail.com");
+        userData.setPassword("12345jhbbjkn61");
+        return userData;
+    }
+    @Step("Данные для тестов - логин с неверным email")
+    public static UserData getUserLoginWithInvalidEmail(){
+        UserData userData = new UserData();
+        userData.setEmail("testik28535456419@gmail.com");
+        userData.setPassword("12345jhbbjkn61");
+        return userData;
+    }
+    @Step("Данные для тестов - логин с неверным password")
+    public static UserData getUserLoginWithInvalidPassword(){
+        UserData userData = new UserData();
+        userData.setEmail("testik28555456419@gmail.com");
+        userData.setPassword("12345jhb");
+        return userData;
+    }
+//    @Step("Ввод данных для создания пользователя")
+//    public static UserData getUserDataForChangDataTest(){
+//        UserData userData = new UserData();
+//        userData.setEmail("testik2436@gmail.com");
+//        userData.setPassword("sfhdythth456");
+//        userData.setName("sththdtthd");
+//        return userData;
+//    }
 }

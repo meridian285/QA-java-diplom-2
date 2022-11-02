@@ -3,7 +3,6 @@ package ru.yandex.practikum.steps;
 import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 import ru.yandex.practikum.dataTests.UserData;
-import ru.yandex.practikum.dataTests.UserDataForLogin;
 
 import static io.restassured.RestAssured.given;
 import static ru.yandex.practikum.dataTests.EndPoints.*;
@@ -20,10 +19,10 @@ public class UserSteps extends RestClient{
     }
     @Step("Выполняется вход")
     //create
-    public ValidatableResponse login(UserDataForLogin userDataForLogin) {
+    public ValidatableResponse login(UserData userData) {
         return given()
                 .spec(getDefaultRequestSpec())
-                .body(userDataForLogin)
+                .body(userData)
                 .post(LOGIN_USER)
                 .then();
     }

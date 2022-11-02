@@ -8,7 +8,7 @@ import ru.yandex.practikum.steps.UserSteps;
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.apache.http.HttpStatus.SC_UNAUTHORIZED;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static ru.yandex.practikum.gererator.UserDataGeneratorLogin.*;
+import static ru.yandex.practikum.gererator.UserDataGenerator.*;
 
 
 public class LoginUserTests {

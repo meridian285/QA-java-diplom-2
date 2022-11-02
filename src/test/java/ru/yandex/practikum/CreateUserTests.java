@@ -7,7 +7,7 @@ import ru.yandex.practikum.steps.UserSteps;
 import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static ru.yandex.practikum.gererator.UserDataGenerator.*;
-import static ru.yandex.practikum.gererator.UserDataGeneratorLogin.getUserRequestLogin;
+//import static ru.yandex.practikum.gererator.UserDataGeneratorLogin.getUserRequestLogin;
 
 public class CreateUserTests {
     private UserSteps userSteps;
