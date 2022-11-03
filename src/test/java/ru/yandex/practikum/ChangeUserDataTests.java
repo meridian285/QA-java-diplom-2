@@ -7,10 +7,11 @@ import ru.yandex.practikum.steps.UserSteps;
 
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.hamcrest.CoreMatchers.equalTo;
-//import static ru.yandex.practikum.gererator.UserDataGenerator.getUserDataForChangDataTest;
-import static ru.yandex.practikum.gererator.UserDataGenerator.getUserRequestLogin;
+import static ru.yandex.practikum.gererator.UserDataGenerator.*;
+
 
 public class ChangeUserDataTests {
+    String accessToken;
     private UserSteps userSteps;
 
     @Before
@@ -18,12 +19,20 @@ public class ChangeUserDataTests {
         userSteps = new UserSteps();
     }
 
-//    @Test
-//    @DisplayName("Тест - логин под существующим пользователем")
-//    public void checkChengUserData() {
-//        userSteps.login(getUserDataForChangDataTest())
-//                .assertThat()
-//                .statusCode(SC_OK)
-//                .body("success", equalTo(true));
-//    }
+    @Test
+    @DisplayName("Тест - изменение данных с авторизацией")
+    public void checkChengUserData() {
+        accessToken = userSteps.create(getUserCreateFaker())
+                .assertThat()
+                .statusCode(SC_OK)
+                .body("success", equalTo(true))
+                .extract()
+                .path("accessToken")
+                .toString();
+        userSteps.checkInfoUser(getUserCreateFaker(),accessToken)
+                .assertThat()
+                .statusCode(SC_OK)
+                .body("success", equalTo(true));
+
+    }
 }

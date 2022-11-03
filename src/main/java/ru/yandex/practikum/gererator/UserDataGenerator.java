@@ -4,6 +4,7 @@ import io.qameta.allure.Step;
 import net.datafaker.Faker;
 import ru.yandex.practikum.dataTests.UserData;
 
+
 public class UserDataGenerator {
 
 
@@ -14,6 +15,7 @@ public class UserDataGenerator {
         var password = faker.random().hex(8);
         var name = faker.name().firstName();
         return new UserData(email, password, name);
+
     }
     @Step("Случайные данные для регистрации - email, name")
     public static UserData getUserCreateWithoutPasswordField() {
@@ -69,12 +71,12 @@ public class UserDataGenerator {
         userData.setPassword("12345jhb");
         return userData;
     }
-//    @Step("Ввод данных для создания пользователя")
-//    public static UserData getUserDataForChangDataTest(){
-//        UserData userData = new UserData();
-//        userData.setEmail("testik2436@gmail.com");
-//        userData.setPassword("sfhdythth456");
-//        userData.setName("sththdtthd");
-//        return userData;
-//    }
+    @Step("Созданный пользователь для теста на изменение данных")
+    public static UserData getUserDataForChangDataTest(){
+        UserData userData = new UserData();
+        userData.setEmail("testik2436@gmail.com");
+        userData.setPassword("sfhdtdhtdh");
+        userData.setName("sththdtthd");
+        return userData;
+    }
 }

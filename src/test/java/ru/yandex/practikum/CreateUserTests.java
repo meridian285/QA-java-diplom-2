@@ -7,7 +7,6 @@ import ru.yandex.practikum.steps.UserSteps;
 import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static ru.yandex.practikum.gererator.UserDataGenerator.*;
-//import static ru.yandex.practikum.gererator.UserDataGeneratorLogin.getUserRequestLogin;
 
 public class CreateUserTests {
     private UserSteps userSteps;
@@ -23,9 +22,7 @@ public class CreateUserTests {
         userSteps.create(getUserCreateFaker())
                 .assertThat()
                 .statusCode(SC_OK)
-                .body("success", equalTo(true))
-                .extract()
-                .path("accessToken");
+                .body("success", equalTo(true));
     }
     @Test
     @DisplayName("Тест - создать пользователя, который уже зарегистрирован")

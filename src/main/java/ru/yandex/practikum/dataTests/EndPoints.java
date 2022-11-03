@@ -10,5 +10,6 @@ public class EndPoints {
     public static String INFO_USER = "api/auth/user";
     public static String DELETE = "api/auth/user";
     public static String ORDERS_FOR_USER = "api/orders";
+    public static String UPDATE_TOKEN = "api/auth/token";
 
 }

@@ -35,7 +35,6 @@ public class LoginUserTests {
                 .statusCode(SC_OK)
                 .body("success", equalTo(true));
     }
-
     @Test
     @DisplayName("Тест - логин с неверным email")
     public void checkLoginWithInvalidEmail() {

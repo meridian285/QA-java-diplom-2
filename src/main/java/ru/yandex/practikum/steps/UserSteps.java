@@ -21,6 +21,7 @@ public class UserSteps extends RestClient{
     //create
     public ValidatableResponse login(UserData userData) {
         return given()
+                .log().all()
                 .spec(getDefaultRequestSpec())
                 .body(userData)
                 .post(LOGIN_USER)
@@ -37,11 +38,14 @@ public class UserSteps extends RestClient{
                 .then();
     }
 
-//    public  ValidatableResponse checkInfoUser(){
-//        return given()
-//                .spec(getDefaultRequestSpec())
-//                .body()
-//                .get(EndPoints.INFO_USER);
-//    }
+    public  ValidatableResponse checkInfoUser( UserData userData, String accessToken){
+        return given()
+                .header("authorization", accessToken)
+                .log().all()
+                .spec(getDefaultRequestSpec())
+                .body(userData)
+                .patch(INFO_USER)
+                .then();
+    }
 
 }
