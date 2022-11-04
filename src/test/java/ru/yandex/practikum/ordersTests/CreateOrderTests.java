@@ -6,6 +6,7 @@ import io.restassured.response.ValidatableResponse;
 import org.junit.Before;
 import org.junit.Test;
 import ru.yandex.practikum.dataTests.User;
+import ru.yandex.practikum.gererator.UserDataGenerator;
 import ru.yandex.practikum.steps.OrderSteps;
 import ru.yandex.practikum.steps.RestClient;
 import ru.yandex.practikum.steps.UserSteps;
@@ -21,12 +22,14 @@ public class CreateOrderTests{
     UserSteps userSteps;
     OrderSteps orderSteps;
     String accessToken;
+    User user;
     private List<String> ingredients;
 
     @Before
     public void setUp(){
+        user = UserDataGenerator.getUserCreateFaker();
         userSteps = new UserSteps();
-        accessToken =  userSteps.create(getUserCreateFaker()).extract().path("accessToken");
+        accessToken =  userSteps.create(user.getEmail(), user.getPassword(), user.getName()).path("accessToken");
         orderSteps = new OrderSteps();
         ingredients = orderSteps.getIngredients().extract().path("_id");
 

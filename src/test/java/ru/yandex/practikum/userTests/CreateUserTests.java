@@ -7,21 +7,25 @@ import org.hamcrest.MatcherAssert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import ru.yandex.practikum.dataTests.User;
+import ru.yandex.practikum.gererator.UserDataGenerator;
 import ru.yandex.practikum.steps.UserSteps;
 import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static ru.yandex.practikum.gererator.UserDataGenerator.*;
 
 public class CreateUserTests {
     private UserSteps userSteps;
     private String accessToken;
-
-
-
+    Response response;
+    User user;
     @Before
     public void setUp(){
+
         userSteps = new UserSteps();
+        user = UserDataGenerator.getUserCreateFaker();
     }
     @After
     @DisplayName("Удаляем логин пользователя после каждого теста если получен accessToken")
@@ -31,38 +35,42 @@ public class CreateUserTests {
             userSteps.deleteUser(accessToken).assertThat().statusCode(SC_ACCEPTED)
                     .body("success", equalTo(true));
         }
-//        assertEquals(403, );
+//        assertEquals(403, response.statusCode());
     }
 
     @Test
     @DisplayName("Тест - создать уникального пользователя")
     public void registrationUserTest(){
-        accessToken = userSteps.create(getUserCreateFaker())
-                .assertThat()
-                .statusCode(SC_OK)
-                .body("success", equalTo(true))
-                .extract().path("accessToken");
+        response = userSteps.create(user.getEmail(), user.getPassword(), user.getName()).path("accessToken");
+//                assertEquals(200, response.statusCode());
+//                assertThat("success", equalTo(true));
+//        accessToken = response.toString();
+        System.out.println(response.toString());
+
     }
 
     @Test
     @DisplayName("Тест - создать пользователя, который уже зарегистрирован")
     public void checkCannotCreateExistingUser(){
-        accessToken = userSteps.login(getUserRequestLogin())
-                .assertThat()
+        String email = user.getEmail();
+        String password = user.getPassword();
+        String name = user.getName();
+        accessToken = userSteps.create(email, password, name)
+                .then().assertThat()
                 .statusCode(SC_OK)
                 .body("success", equalTo(true))
                 .extract().path("accessToken");
-        userSteps.create(getUserExistingData())
-                .assertThat()
+        userSteps.create(email, password, name)
+                .then().assertThat()
                 .statusCode(SC_FORBIDDEN)
                 .body("success", equalTo(false));
     }
     @Test
     @DisplayName("Тест -  создать пользователя и не заполнить поле email")
     public void checkCreateUserWithoutEmailField(){
-        ValidatableResponse response;
-        userSteps.create(getUserCreateWithoutEmailField())
-                .assertThat()
+
+        userSteps.create(user.getEmail(), user.getPassword(), user.getName())
+                .then().assertThat()
                 .statusCode(SC_FORBIDDEN)
                 .body("message", equalTo("Email, password and name are required fields"));
 //        if(accessToken == null){
@@ -75,8 +83,8 @@ public class CreateUserTests {
     @Test
     @DisplayName("Тест -  создать пользователя и не заполнить поле password")
     public void checkCreateUserWithoutPasswordField(){
-        accessToken = userSteps.create(getUserCreateWithoutPasswordField())
-                .assertThat()
+        accessToken = userSteps.create(user.getEmail(), user.getPassword(), user.getName())
+                .then().assertThat()
                 .statusCode(SC_FORBIDDEN)
                 .body("message", equalTo("Email, password and name are required fields"))
                 .extract().path("accessToken");
@@ -85,8 +93,8 @@ public class CreateUserTests {
     @Test
     @DisplayName("Тест -  создать пользователя и не заполнить поле name")
     public void checkCreateUserWithoutNameField(){
-        userSteps.create(getUserCreateWithoutNameField())
-                .assertThat()
+        userSteps.create(user.getEmail(), user.getPassword(), user.getName())
+                .then().assertThat()
                 .statusCode(SC_FORBIDDEN)
                 .body("message", equalTo("Email, password and name are required fields"));
     }
