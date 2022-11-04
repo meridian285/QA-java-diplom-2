@@ -1,4 +1,4 @@
-package ru.yandex.practikum;
+package ru.yandex.practikum.userTests;
 
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.Before;
