@@ -1,5 +1,6 @@
 package ru.yandex.practikum.steps;
 
+import com.google.gson.Gson;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
@@ -9,42 +10,18 @@ import static io.restassured.RestAssured.given;
 import static ru.yandex.practikum.dataTests.EndPoints.*;
 
 public class UserSteps extends RestClient{
-    User user = new User();
-    JSONObject jsonObject = new JSONObject();
-    String requestBody;
-//    @Step("Регистрация пользователя")
-//    //create
-//    public ValidatableResponse create(User user) {
-//        return given()
-//                .log().all()
-//                .spec(getDefaultRequestSpec())
-//                .body(user)
-//                .post(CREATE_USER)
-//                .then();
-//    }
     @Step("Регистрация пользователя")
     //create
     public Response create(String email, String password, String name) {
+        JSONObject jsonObject = new JSONObject();
+        String requestBody;
         requestBody = jsonObject
-                .put(email,"email")
-                .put(password, "password")
-                .put(name, "name")
+                .put("email", email)
+                .put( "password", password)
+                .put("name",name)
                 .toString();
         Response response = given()
                 .log().all()
-                .spec(getDefaultRequestSpec())
-                .body(requestBody)
-                .post(CREATE_USER);
-        return response;
-    }
-    @Step("Регистрация пользователя")
-    public Response create1(String email, String password, String name) {
-        requestBody = jsonObject
-                .put(email,"email")
-                .put(password, "password")
-                .put(name, "name")
-                .toString();
-        Response response = given()
                 .spec(getDefaultRequestSpec())
                 .body(requestBody)
                 .post(CREATE_USER);
@@ -52,13 +29,19 @@ public class UserSteps extends RestClient{
     }
     @Step("Выполняется вход")
     //create
-    public ValidatableResponse login(User user) {
-        return given()
+    public Response login(String email, String password) {
+        JSONObject jsonObject = new JSONObject();
+        String requestBody;
+        requestBody = jsonObject
+                .put("email", email)
+                .put("password", password)
+                .toString();
+        Response response = given()
                 .log().all()
                 .spec(getDefaultRequestSpec())
-                .body(user)
-                .post(LOGIN_USER)
-                .then();
+                .body(requestBody)
+                .post(LOGIN_USER);
+        return response;
     }
 
     @Step("Удаление пользователя")

@@ -30,25 +30,25 @@ public class CreateUserTests {
     @After
     @DisplayName("Удаляем логин пользователя после каждого теста если получен accessToken")
     //удаляем данные после каждого теста
-    public void tearDown(){
-        if(accessToken != null){
+    public void tearDown() {
+        if (accessToken != null) {
             userSteps.deleteUser(accessToken).assertThat().statusCode(SC_ACCEPTED)
                     .body("success", equalTo(true));
+        } else {
+            assertEquals("Неверный код ответа", 403, response.statusCode());
+
         }
-//        assertEquals(403, response.statusCode());
     }
 
     @Test
     @DisplayName("Тест - создать уникального пользователя")
     public void registrationUserTest(){
-        response = userSteps.create(user.getEmail(), user.getPassword(), user.getName()).path("accessToken");
-//                assertEquals(200, response.statusCode());
-//                assertThat("success", equalTo(true));
-//        accessToken = response.toString();
-        System.out.println(response.toString());
+        response = userSteps.create(user.getEmail(), user.getPassword(), user.getName());
+                assertEquals(200, response.statusCode());
+                assertEquals(true,response.path("success"));
+        accessToken = response.path("accessToken").toString();
 
     }
-
     @Test
     @DisplayName("Тест - создать пользователя, который уже зарегистрирован")
     public void checkCannotCreateExistingUser(){
@@ -68,34 +68,25 @@ public class CreateUserTests {
     @Test
     @DisplayName("Тест -  создать пользователя и не заполнить поле email")
     public void checkCreateUserWithoutEmailField(){
-
-        userSteps.create(user.getEmail(), user.getPassword(), user.getName())
-                .then().assertThat()
-                .statusCode(SC_FORBIDDEN)
-                .body("message", equalTo("Email, password and name are required fields"));
-//        if(accessToken == null){
-//
-//        }else{
-//            userSteps.deleteUser(accessToken).assertThat().statusCode(SC_ACCEPTED)
-//                    .body("success", equalTo(true));
-//        }
+        response = userSteps.create("", user.getPassword(), user.getName());
+        assertEquals(403, response.statusCode());
+        assertEquals("Email, password and name are required fields",response.path("message"));
+        accessToken = response.path("accessToken");
     }
     @Test
     @DisplayName("Тест -  создать пользователя и не заполнить поле password")
     public void checkCreateUserWithoutPasswordField(){
-        accessToken = userSteps.create(user.getEmail(), user.getPassword(), user.getName())
-                .then().assertThat()
-                .statusCode(SC_FORBIDDEN)
-                .body("message", equalTo("Email, password and name are required fields"))
-                .extract().path("accessToken");
-
+        response = userSteps.create("", user.getPassword(), user.getName());
+        assertEquals(403, response.statusCode());
+        assertEquals("Email, password and name are required fields",response.path("message"));
+        accessToken = response.path("accessToken");
     }
     @Test
     @DisplayName("Тест -  создать пользователя и не заполнить поле name")
     public void checkCreateUserWithoutNameField(){
-        userSteps.create(user.getEmail(), user.getPassword(), user.getName())
-                .then().assertThat()
-                .statusCode(SC_FORBIDDEN)
-                .body("message", equalTo("Email, password and name are required fields"));
+        response = userSteps.create("", user.getPassword(), user.getName());
+        assertEquals(403, response.statusCode());
+        assertEquals("Email, password and name are required fields",response.path("message"));
+        accessToken = response.path("accessToken");
     }
 }
