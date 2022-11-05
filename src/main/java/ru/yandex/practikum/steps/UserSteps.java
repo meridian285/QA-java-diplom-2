@@ -37,7 +37,6 @@ public class UserSteps extends RestClient{
                 .put("password", password)
                 .toString();
         Response response = given()
-                .log().all()
                 .spec(getDefaultRequestSpec())
                 .body(requestBody)
                 .post(LOGIN_USER);
@@ -48,33 +47,33 @@ public class UserSteps extends RestClient{
     //create
     public ValidatableResponse deleteUser(String accessToken) {
         return given()
-                .log().all()
                 .header("authorization", accessToken)
                 .spec(getDefaultRequestSpec())
                 .delete(DELETE)
                 .then();
     }
-    @Step("Изменение данных пользователя - Email")
-    public  ValidatableResponse checkChangeUserEmail(String email, String accessToken){
+    @Step("Изменение данных пользователя")
+    public  ValidatableResponse checkChangeUserData(String email, String accessToken){
         JSONObject requestJsonObjectBody = new JSONObject();
         String requestBody = requestJsonObjectBody
                 .put("email", email)
                 .toString();
         return given()
                 .header("authorization", accessToken)
-                .log().all()
                 .spec(getDefaultRequestSpec())
                 .body(requestBody)
                 .patch(INFO_USER)
                 .then();
     }
-    @Step("Изменение данных пользователя - password")
-    public  ValidatableResponse checkChangeUserPassword(User user, String accessToken){
+    @Step("Изменение данных пользователя без авторизации")
+    public  ValidatableResponse checkChangeUserDataWithoutAuthorization(String email){
+        JSONObject requestJsonObjectBody = new JSONObject();
+        String requestBody = requestJsonObjectBody
+                .put("email", email)
+                .toString();
         return given()
-                .header("authorization", accessToken)
-                .log().all()
                 .spec(getDefaultRequestSpec())
-                .body(user)
+                .body(requestBody)
                 .patch(INFO_USER)
                 .then();
     }
@@ -82,11 +81,9 @@ public class UserSteps extends RestClient{
     @Step("Изменение данных пользователя без авторизации")
     public  ValidatableResponse checkInfoUserWithoutAuthorization( User user){
         return given()
-                .log().all()
                 .spec(getDefaultRequestSpec())
                 .body(user)
                 .patch(INFO_USER)
                 .then();
     }
-
 }
