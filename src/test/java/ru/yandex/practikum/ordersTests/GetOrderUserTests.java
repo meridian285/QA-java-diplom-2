@@ -10,19 +10,20 @@ import ru.yandex.practikum.gererator.IngredientsDataGenerator;
 import ru.yandex.practikum.gererator.UserDataGenerator;
 import ru.yandex.practikum.steps.OrderSteps;
 import ru.yandex.practikum.steps.UserSteps;
-import java.util.Collections;
+
 import java.util.List;
+
 import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 
-public class CreateOrderTests{
+public class GetOrderUserTests {
     UserSteps userSteps;
     OrderSteps orderSteps;
     String accessToken;
     User user;
     Ingredients ingredients;
 
-    private  List<String> ingredientsList;
+    private List<String> ingredientsList;
     @Before
     public void setUp(){
         user = UserDataGenerator.getUserCreateFaker();
@@ -40,49 +41,31 @@ public class CreateOrderTests{
                     .body("success", equalTo(true));
         }
     }
+
     @Test
-    @DisplayName("Тест - Создание заказа: с авторизацией, с ингредиентами")
-    public void checkCreateOrderWithAuthorization() {
+    @DisplayName("Тест - Получение заказов конкретного пользователя: авторизованный пользователь")
+    public void checkCreateOrderForUser() {
         ingredients = new Ingredients(IngredientsDataGenerator.getRandomIngredients(ingredientsList));
         orderSteps.createOrderWithAuthorization(ingredients, accessToken)
                 .assertThat()
                 .statusCode(SC_OK)
                 .body("success", equalTo(true));
-    }
-    @Test
-    @DisplayName("Тест - Создание заказа: без авторизации, с ингредиентами")
-    public void checkCreateOrderWithoutAuthorization() {
-        ingredients = new Ingredients(IngredientsDataGenerator.getRandomIngredients(ingredientsList));
-        orderSteps.createOrderWithoutAuthorization(ingredients)
+        orderSteps.getOrdersUserWithAuthorization(accessToken)
                 .assertThat()
                 .statusCode(SC_OK)
                 .body("success", equalTo(true));
     }
     @Test
-    @DisplayName("Тест - Создание заказа: с авторизацией, без ингредиентов")
-    public void checkCreateOrderWithoutIngredients() {
-        ingredients = new Ingredients(IngredientsDataGenerator.getRandomIngredients(null));
+    @DisplayName("Тест - Получение заказов конкретного пользователя: не авторизованный пользователь")
+    public void checkCreateOrderForUserWithoutAuthorization() {
+        ingredients = new Ingredients(IngredientsDataGenerator.getRandomIngredients(ingredientsList));
         orderSteps.createOrderWithAuthorization(ingredients, accessToken)
                 .assertThat()
-                .statusCode(SC_BAD_REQUEST)
-                .body("success", equalTo(false));
-    }
-    @Test
-    @DisplayName("Тест - Создание заказа: без авторизации, без ингредиентов")
-    public void checkCreateOrderWithoutIngredientsAndWithoutAuthorization() {
-        ingredients = new Ingredients(IngredientsDataGenerator.getRandomIngredients(null));
-        orderSteps.createOrderWithoutAuthorization(ingredients)
+                .statusCode(SC_OK)
+                .body("success", equalTo(true));
+        orderSteps.getOrdersUserWithAuthorization()
                 .assertThat()
-                .statusCode(SC_BAD_REQUEST)
-                .body("success", equalTo(false));
-    }
-    @Test
-    @DisplayName("Тест - Создание заказа: с авторизацией, с неправильным ингредиентом")
-    public void checkCreateOrderWithInvalidIngredients() {
-        ingredients = new Ingredients(IngredientsDataGenerator.getRandomIngredients(Collections.singletonList("61c0c5asergsregare453")));
-        orderSteps.createOrderWithAuthorization(ingredients, accessToken)
-                .assertThat()
-                .statusCode(SC_INTERNAL_SERVER_ERROR)
+                .statusCode(SC_UNAUTHORIZED)
                 .body("success", equalTo(false));
     }
 }

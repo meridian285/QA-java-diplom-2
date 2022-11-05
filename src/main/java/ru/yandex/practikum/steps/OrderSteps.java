@@ -11,16 +11,6 @@ import static ru.yandex.practikum.dataTests.EndPoints.*;
 
 public class OrderSteps extends RestClient {
 
-    @Step("Изменение данных пользователя")
-    public ValidatableResponse checkInfoUser(User user, String accessToken){
-        return given()
-                .header("authorization", accessToken)
-                .log().all()
-                .spec(getDefaultRequestSpec())
-                .body(user)
-                .patch(INFO_USER)
-                .then();
-    }
     @Step("Получить список всех ингредиентов")
     public ValidatableResponse getIngredients(){
         return given()
@@ -31,7 +21,6 @@ public class OrderSteps extends RestClient {
     @Step("Создание заказа с авторизацией")
     public ValidatableResponse createOrderWithAuthorization(Ingredients ingredients, String accessToken){
         return given()
-                .log().all()
                 .header("authorization", accessToken)
                 .spec(getDefaultRequestSpec())
                 .body(ingredients)
@@ -41,11 +30,24 @@ public class OrderSteps extends RestClient {
     @Step("Создание заказа без авторизации")
     public ValidatableResponse createOrderWithoutAuthorization(Ingredients ingredients){
         return given()
-                .log().all()
                 .spec(getDefaultRequestSpec())
                 .body(ingredients)
                 .post(ORDERS)
                 .then();
     }
-
+    @Step("Получение заказов пользователя с авторизацией")
+    public ValidatableResponse getOrdersUserWithAuthorization(String accessToken){
+        return given()
+                .header("authorization", accessToken)
+                .spec(getDefaultRequestSpec())
+                .get(ORDERS)
+                .then();
+    }
+    @Step("Получение заказов пользователя без авторизации")
+    public ValidatableResponse getOrdersUserWithAuthorization(){
+        return given()
+                .spec(getDefaultRequestSpec())
+                .get(ORDERS)
+                .then();
+    }
 }

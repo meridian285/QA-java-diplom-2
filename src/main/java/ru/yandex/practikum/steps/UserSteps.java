@@ -21,7 +21,6 @@ public class UserSteps extends RestClient{
                 .put("name",name)
                 .toString();
         Response response = given()
-                .log().all()
                 .spec(getDefaultRequestSpec())
                 .body(requestBody)
                 .post(CREATE_USER);
