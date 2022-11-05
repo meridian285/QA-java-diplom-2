@@ -1,0 +1,5 @@
+ru\yandex\practikum\userTests\ChangeUserTests.class
+ru\yandex\practikum\userTests\CreateUserTests.class
+ru\yandex\practikum\ordersTests\CreateOrderTests.class
+ru\yandex\practikum\userTests\LoginUserTests.class
+ru\yandex\practikum\ordersTests\GetOrderUserTests.class

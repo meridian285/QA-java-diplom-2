@@ -1,0 +1,9 @@
+ru\yandex\practikum\dataTests\EndPoints.class
+ru\yandex\practikum\steps\RestClient.class
+ru\yandex\practikum\steps\UserSteps.class
+ru\yandex\practikum\config\Config.class
+ru\yandex\practikum\dataTests\Ingredients.class
+ru\yandex\practikum\dataTests\User.class
+ru\yandex\practikum\gererator\IngredientsDataGenerator.class
+ru\yandex\practikum\gererator\UserDataGenerator.class
+ru\yandex\practikum\steps\OrderSteps.class
