@@ -1,4 +1,15 @@
 -------------------------------------------------------------------------------
 Test set: ru.yandex.practikum.userTests.CreateUserTests
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.908 s - in ru.yandex.practikum.userTests.CreateUserTests
+Tests run: 5, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 2.292 s <<< FAILURE! - in ru.yandex.practikum.userTests.CreateUserTests
+checkCreateUserWithoutNameField(ru.yandex.practikum.userTests.CreateUserTests)  Time elapsed: 0.294 s  <<< FAILURE!
+java.lang.AssertionError: expected:<403> but was:<429>
+	at ru.yandex.practikum.userTests.CreateUserTests.checkCreateUserWithoutNameField(CreateUserTests.java:85)
+
+checkCannotCreateExistingUser(ru.yandex.practikum.userTests.CreateUserTests)  Time elapsed: 0.282 s  <<< FAILURE!
+java.lang.AssertionError: 
+1 expectation failed.
+Expected status code <200> but was <429>.
+
+	at ru.yandex.practikum.userTests.CreateUserTests.checkCannotCreateExistingUser(CreateUserTests.java:57)
+

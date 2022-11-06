@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: ru.yandex.practikum.ordersTests.CreateOrderTests
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 17.927 s <<< FAILURE! - in ru.yandex.practikum.ordersTests.CreateOrderTests
-checkCreateOrderWithInvalidIngredients(ru.yandex.practikum.ordersTests.CreateOrderTests)  Time elapsed: 1.557 s  <<< FAILURE!
+Tests run: 5, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 24.124 s <<< FAILURE! - in ru.yandex.practikum.ordersTests.CreateOrderTests
+checkCreateOrderWithInvalidIngredients(ru.yandex.practikum.ordersTests.CreateOrderTests)  Time elapsed: 1.786 s  <<< FAILURE!
 java.lang.AssertionError: 
 1 expectation failed.
 Expected status code <500> but was <400>.
