@@ -12,6 +12,7 @@ import ru.yandex.practikum.steps.UserSteps;
 import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static ru.yandex.practikum.gererator.UserDataGenerator.*;
 import static ru.yandex.practikum.gererator.UserDataGenerator.getUserCreateFaker;
 
@@ -54,16 +55,18 @@ public class ChangeUserTests {
     @Test
     @DisplayName("Тест - изменение поля password с авторизацией")
     public void checkChangePasswordWithAuthorization() {
+                String name = "Jack231423";
         accessToken = userSteps.create(user.getEmail(), user.getPassword(), user.getName())
                 .then().assertThat()
                 .statusCode(SC_OK)
                 .body("success", equalTo(true))
                 .extract()
                 .path("accessToken");
-        userSteps.checkChangeUserData(user.getPassword(),accessToken)
+        userSteps.checkChangeUserData(name,accessToken)
                 .assertThat()
                 .statusCode(SC_OK)
-                .body("success", equalTo(true));
+                .body("success", equalTo(true))
+                .body("user.name", equalTo(name));
     }
     @Test
     @DisplayName("Тест - изменение поля name с авторизацией")

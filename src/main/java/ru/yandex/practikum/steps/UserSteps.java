@@ -21,6 +21,7 @@ public class UserSteps extends RestClient{
                 .put("name",name)
                 .toString();
         Response response = given()
+                .log().all()
                 .spec(getDefaultRequestSpec())
                 .body(requestBody)
                 .post(CREATE_USER);
@@ -52,12 +53,13 @@ public class UserSteps extends RestClient{
                 .then();
     }
     @Step("Изменение данных пользователя")
-    public  ValidatableResponse checkChangeUserData(String email, String accessToken){
+    public  ValidatableResponse checkChangeUserData(String name, String accessToken){
         JSONObject requestJsonObjectBody = new JSONObject();
         String requestBody = requestJsonObjectBody
-                .put("email", email)
+                .put("name", name)
                 .toString();
         return given()
+                .log().all()
                 .header("authorization", accessToken)
                 .spec(getDefaultRequestSpec())
                 .body(requestBody)
