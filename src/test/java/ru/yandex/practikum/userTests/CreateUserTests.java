@@ -2,8 +2,6 @@ package ru.yandex.practikum.userTests;
 
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
-import io.restassured.response.ValidatableResponse;
-import org.hamcrest.MatcherAssert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,9 +10,7 @@ import ru.yandex.practikum.gererator.UserDataGenerator;
 import ru.yandex.practikum.steps.UserSteps;
 import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
-import static ru.yandex.practikum.gererator.UserDataGenerator.*;
 
 public class CreateUserTests {
     private UserSteps userSteps;

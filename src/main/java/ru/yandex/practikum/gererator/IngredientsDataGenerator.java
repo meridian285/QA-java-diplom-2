@@ -1,7 +1,5 @@
 package ru.yandex.practikum.gererator;
 
-import ru.yandex.practikum.dataTests.Ingredients;
-
 import java.util.List;
 import java.util.Random;
 

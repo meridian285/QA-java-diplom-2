@@ -11,10 +11,6 @@ import ru.yandex.practikum.steps.UserSteps;
 
 import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static ru.yandex.practikum.gererator.UserDataGenerator.*;
-import static ru.yandex.practikum.gererator.UserDataGenerator.getUserCreateFaker;
 
 
 public class ChangeUserTests {
